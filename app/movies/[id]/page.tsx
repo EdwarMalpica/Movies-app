@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ReviewList } from "@/components/review-list"
 import { Badge } from "@/components/ui/badge"
-// Import the MovieThumbnails component
-import { MovieThumbnails } from "@/components/movie-thumbnails"
 
 // Mock data - in a real app, this would come from an API
 const mockMovie = {
@@ -42,9 +40,9 @@ export default function MoviePage({ params }: MoviePageProps) {
   const movie = mockMovie
 
   return (
-    <div>
+    <div className="pb-4">
       {/* Backdrop */}
-      <div className="relative h-[50vh] w-full">
+      <div className="relative h-[40vh] w-full">
         <div className="absolute inset-0 bg-gradient-to-t from-background to-background/60 z-10" />
         <Image src={movie.backdrop || "/placeholder.svg"} alt={movie.title} fill className="object-cover" priority />
         <div className="container relative z-20 h-full flex flex-col justify-end pb-6 px-4 md:px-6 mx-auto">
@@ -55,11 +53,11 @@ export default function MoviePage({ params }: MoviePageProps) {
             </Button>
           </Link>
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="hidden md:block relative h-[240px] w-[160px] shrink-0 rounded-lg overflow-hidden shadow-lg">
+            <div className="hidden md:block relative h-[200px] w-[140px] shrink-0 rounded-lg overflow-hidden shadow-lg">
               <Image src={movie.poster || "/placeholder.svg"} alt={movie.title} fill className="object-cover" />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold">{movie.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold">{movie.title}</h1>
               <div className="flex flex-wrap gap-2 mt-2">
                 {movie.genres.map((genre) => (
                   <Badge key={genre} variant="secondary">
@@ -67,7 +65,7 @@ export default function MoviePage({ params }: MoviePageProps) {
                   </Badge>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-4 mt-4 text-sm">
+              <div className="flex flex-wrap gap-4 mt-3 text-sm">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                   <span>{movie.rating}/10</span>
@@ -81,46 +79,39 @@ export default function MoviePage({ params }: MoviePageProps) {
                   <span>{movie.runtime} min</span>
                 </div>
               </div>
+              <div className="mt-3">
+                <p className="text-sm">{movie.plot}</p>
+                <p className="text-sm mt-2">
+                  <span className="font-medium">Director:</span> {movie.director}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="container mx-auto py-6 px-4 md:px-6">
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
+      <div className="container mx-auto py-4 px-4 md:px-6">
+        {/* Cast */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold mb-3">Cast</h2>
+          <div className="flex flex-wrap gap-2">
+            {movie.cast.map((actor) => (
+              <Badge key={actor} variant="outline">
+                {actor}
+              </Badge>
+            ))}
+          </div>
+        </div>
+
+        <Tabs defaultValue="photos" className="w-full">
+          <TabsList className="mb-6">
             <TabsTrigger value="photos">Photos</TabsTrigger>
             <TabsTrigger value="reviews">Reviews</TabsTrigger>
           </TabsList>
-          {/* Add the MovieThumbnails component to the overview tab */}
-          <TabsContent value="overview" className="space-y-8">
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
-              <p>{movie.plot}</p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Director</h2>
-              <p>{movie.director}</p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Cast</h2>
-              <div className="flex flex-wrap gap-2">
-                {movie.cast.map((actor) => (
-                  <Badge key={actor} variant="outline">
-                    {actor}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            <div>
-              <MovieThumbnails title={movie.title} thumbnails={movie.thumbnails} />
-            </div>
-          </TabsContent>
+
           <TabsContent value="photos" className="space-y-6">
-            <h2 className="text-xl font-semibold mb-4">Movie Scenes</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {movie.thumbnails.map((thumbnail, index) => (
                 <div key={index} className="relative aspect-video rounded-lg overflow-hidden">
                   <Image
@@ -133,6 +124,7 @@ export default function MoviePage({ params }: MoviePageProps) {
               ))}
             </div>
           </TabsContent>
+
           <TabsContent value="reviews" className="space-y-8">
             <ReviewList movieId={movieId} />
           </TabsContent>
