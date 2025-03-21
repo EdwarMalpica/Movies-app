@@ -1,7 +1,5 @@
 import { SearchForm } from "@/components/search-form"
 import { MovieGrid } from "@/components/movie-grid"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 export default function Home() {
   return (
@@ -15,22 +13,12 @@ export default function Home() {
       </div>
 
       <div className="mb-10">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Popular Movies</h2>
-          <Link href="/search">
-            <Button variant="outline">View All</Button>
-          </Link>
-        </div>
+        <h2 className="text-2xl font-semibold mb-6">Popular Movies</h2>
         <MovieGrid />
       </div>
 
       <div>
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Top Rated</h2>
-          <Link href="/search">
-            <Button variant="outline">View All</Button>
-          </Link>
-        </div>
+        <h2 className="text-2xl font-semibold mb-6">Top Rated</h2>
         <MovieGrid />
       </div>
     </div>

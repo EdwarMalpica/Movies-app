@@ -12,6 +12,7 @@ interface MovieThumbnailsProps {
 }
 
 export function MovieThumbnails({ title, thumbnails }: MovieThumbnailsProps) {
+  const [open, setOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const handlePrevious = () => {
@@ -22,12 +23,23 @@ export function MovieThumbnails({ title, thumbnails }: MovieThumbnailsProps) {
     setCurrentIndex((prev) => (prev === thumbnails.length - 1 ? 0 : prev + 1))
   }
 
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <div className="space-y-4">
       <h3 className="font-medium">Thumbnails</h3>
       <div className="flex gap-2 overflow-x-auto pb-2 -mx-2 px-2">
         {thumbnails.map((thumbnail, index) => (
-          <Dialog key={index}>
+          <Dialog
+            key={index}
+            open={open && currentIndex === index}
+            onOpenChange={(newOpen) => {
+              setOpen(newOpen)
+              if (newOpen) setCurrentIndex(index)
+            }}
+          >
             <DialogTrigger asChild>
               <button className="relative min-w-[120px] h-[80px] rounded-md overflow-hidden border hover:opacity-90 transition-opacity">
                 <Image
@@ -49,12 +61,7 @@ export function MovieThumbnails({ title, thumbnails }: MovieThumbnailsProps) {
                   />
                 </div>
                 <div className="absolute top-2 right-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:bg-black/50"
-                    onClick={() => document.querySelector('[data-state="open"] button[aria-label="Close"]')?.click()}
-                  >
+                  <Button variant="ghost" size="icon" className="text-white hover:bg-black/50" onClick={handleClose}>
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
@@ -69,11 +76,11 @@ export function MovieThumbnails({ title, thumbnails }: MovieThumbnailsProps) {
                   </Button>
                 </div>
                 <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1">
-                  {thumbnails.map((_, index) => (
+                  {thumbnails.map((_, idx) => (
                     <button
-                      key={index}
-                      className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
-                      onClick={() => setCurrentIndex(index)}
+                      key={idx}
+                      className={`w-2 h-2 rounded-full ${idx === currentIndex ? "bg-white" : "bg-white/50"}`}
+                      onClick={() => setCurrentIndex(idx)}
                     />
                   ))}
                 </div>

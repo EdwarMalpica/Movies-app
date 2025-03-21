@@ -1,5 +1,6 @@
 import { SearchForm } from "@/components/search-form"
 import { MovieGrid } from "@/components/movie-grid"
+import { TrendingUp } from "lucide-react"
 
 interface SearchPageProps {
   searchParams: { q?: string }
@@ -11,7 +12,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-6">Search Results</h1>
+        <h1 className="text-3xl font-bold mb-6">Search Movies</h1>
         <SearchForm initialQuery={query} />
       </div>
 
@@ -23,8 +24,12 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
           <MovieGrid searchQuery={query} />
         </>
       ) : (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">Enter a search term to find movies</p>
+        <div className="space-y-6">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-6 w-6" />
+            <h2 className="text-2xl font-semibold">Trending Movies</h2>
+          </div>
+          <MovieGrid />
         </div>
       )}
     </div>

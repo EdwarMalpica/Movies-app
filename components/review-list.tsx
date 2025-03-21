@@ -90,11 +90,14 @@ export function ReviewList({ movieId }: ReviewListProps) {
   }
 
   return (
-    <div>
+    <div className="space-y-10">
       <ReviewForm movieId={movieId} updateReviews={handleUpdateReviews} />
+
       <div className="space-y-6">
-        <h2 className="text-xl font-semibold">User Reviews</h2>
-        <div className="space-y-6">
+        <div className="border-b pb-2">
+          <h2 className="text-xl font-semibold">User Reviews</h2>
+        </div>
+        <div className="space-y-8">
           {reviews.map((review) => (
             <div key={review.id} className="border-b pb-6 last:border-0">
               <div className="flex items-start gap-4">

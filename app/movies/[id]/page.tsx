@@ -47,9 +47,9 @@ export default function MoviePage({ params }: MoviePageProps) {
       <div className="relative h-[50vh] w-full">
         <div className="absolute inset-0 bg-gradient-to-t from-background to-background/60 z-10" />
         <Image src={movie.backdrop || "/placeholder.svg"} alt={movie.title} fill className="object-cover" priority />
-        <div className="container relative z-20 h-full flex flex-col justify-end pb-8">
-          <Link href="/" className="mb-auto pt-6">
-            <Button variant="ghost" size="sm" className="gap-1">
+        <div className="container relative z-20 h-full flex flex-col justify-end pb-6 px-4 md:px-6 mx-auto">
+          <Link href="/" className="mb-auto mt-4">
+            <Button variant="ghost" size="sm" className="gap-1 px-0">
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
@@ -87,15 +87,15 @@ export default function MoviePage({ params }: MoviePageProps) {
       </div>
 
       {/* Content */}
-      <div className="container py-8">
+      <div className="container mx-auto py-6 px-4 md:px-6">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="mb-6">
+          <TabsList className="mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="photos">Photos</TabsTrigger>
             <TabsTrigger value="reviews">Reviews</TabsTrigger>
           </TabsList>
           {/* Add the MovieThumbnails component to the overview tab */}
-          <TabsContent value="overview" className="space-y-6">
+          <TabsContent value="overview" className="space-y-8">
             <div>
               <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
               <p>{movie.plot}</p>

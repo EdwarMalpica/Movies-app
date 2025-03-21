@@ -31,15 +31,6 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
 
     setIsSubmitting(true)
 
-    // In a real app, send to an API
-    console.log({
-      movieId,
-      name,
-      rating,
-      review,
-      date: new Date().toISOString(),
-    })
-
     // Simulate API call
     setTimeout(() => {
       setName("")
