@@ -1,33 +1,58 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
 interface SearchFormProps {
-  initialQuery?: string
+  value?: string
   onQueryChange?: (query: string) => void
 }
 
-export function SearchForm({ initialQuery = "", onQueryChange }: SearchFormProps) {
-  const [query, setQuery] = useState(initialQuery)
+export function SearchForm({ value = "", onQueryChange }: SearchFormProps) {
+  const [localQuery, setLocalQuery] = useState(value)
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Update the parent component with the query as user types
+  // Update local state when value prop changes (for suggestion clicks)
   useEffect(() => {
-    if (onQueryChange) {
-      onQueryChange(query)
-    }
-  }, [query, onQueryChange])
+    setLocalQuery(value)
+  }, [value])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (onQueryChange) {
+      onQueryChange(localQuery)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value)
+    const newValue = e.target.value
+
+    // Always update local state immediately for responsive typing
+    setLocalQuery(newValue)
+
+    // Clear any existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+    }
+
+    // Set a new timer to update parent state after user stops typing
+    debounceTimerRef.current = setTimeout(() => {
+      if (onQueryChange) {
+        onQueryChange(newValue)
+      }
+    }, 500) // Increased debounce time to 500ms for better performance
   }
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+      }
+    }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg">
@@ -37,8 +62,21 @@ export function SearchForm({ initialQuery = "", onQueryChange }: SearchFormProps
           type="search"
           placeholder="Search for movies..."
           className="pl-10 w-full"
-          value={query}
+          value={localQuery}
           onChange={handleChange}
+          onKeyDown={(e) => {
+            // Submit search on Enter key
+            if (e.key === "Enter") {
+              if (onQueryChange) {
+                onQueryChange(localQuery)
+              }
+              // Clear any pending debounce
+              if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current)
+                debounceTimerRef.current = null
+              }
+            }
+          }}
         />
       </div>
     </form>

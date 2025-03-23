@@ -7,38 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ReviewForm } from "@/components/review-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-
-// Mock data - in a real app, this would come from an API
-const mockReviews = [
-  {
-    id: 1,
-    name: "John Doe",
-    rating: 5,
-    date: "2023-10-15",
-    content: "One of the best movies I've ever seen. The concept is mind-blowing and the execution is flawless.",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    rating: 4,
-    date: "2023-09-22",
-    content: "Great movie with an interesting concept. The visuals are stunning and the acting is superb.",
-  },
-  {
-    id: 3,
-    name: "Mike Johnson",
-    rating: 3,
-    date: "2023-08-05",
-    content: "It's a good movie, but I found the plot a bit confusing at times. Still worth watching though.",
-  },
-  {
-    id: 4,
-    name: "Sarah Williams",
-    rating: 2,
-    date: "2023-11-10",
-    content: "I was disappointed with this movie. The plot had too many holes and the pacing was off.",
-  },
-]
+import { getReviewsByMovieId } from "@/lib/mock-data"
 
 interface ReviewListProps {
   movieId: string
@@ -57,8 +26,12 @@ export function ReviewList({ movieId }: ReviewListProps) {
       setLoading(true)
       // In a real app, fetch from an API based on movieId
       setTimeout(() => {
+        // Get reviews for this movie
+        const movieReviews = getReviewsByMovieId(movieId)
+
         // Sort reviews by date (newest first)
-        const sortedReviews = [...mockReviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        const sortedReviews = [...movieReviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
         setReviews(sortedReviews)
         setLoading(false)
       }, 1000)

@@ -5,29 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ReviewList } from "@/components/review-list"
 import { Badge } from "@/components/ui/badge"
-
-// Mock data - in a real app, this would come from an API
-const mockMovie = {
-  id: 1,
-  title: "Inception",
-  poster: "/placeholder.svg?height=600&width=400",
-  backdrop: "/placeholder.svg?height=1080&width=1920",
-  year: 2010,
-  rating: 8.8,
-  runtime: 148,
-  director: "Christopher Nolan",
-  cast: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page", "Tom Hardy"],
-  plot: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-  genres: ["Action", "Adventure", "Sci-Fi"],
-  thumbnails: [
-    "/placeholder.svg?height=200&width=300&text=Scene+1",
-    "/placeholder.svg?height=200&width=300&text=Scene+2",
-    "/placeholder.svg?height=200&width=300&text=Scene+3",
-    "/placeholder.svg?height=200&width=300&text=Scene+4",
-    "/placeholder.svg?height=200&width=300&text=Scene+5",
-    "/placeholder.svg?height=200&width=300&text=Scene+6",
-  ],
-}
+import { getMovieById } from "@/lib/mock-data"
 
 interface MoviePageProps {
   params: { id: string }
@@ -36,8 +14,21 @@ interface MoviePageProps {
 export default function MoviePage({ params }: MoviePageProps) {
   const movieId = params.id
 
-  // In a real app, fetch the movie data based on the ID
-  const movie = mockMovie
+  // Get movie data
+  const movie = getMovieById(movieId)
+
+  // If movie not found, show a message
+  if (!movie) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
+        <p className="mb-6">Sorry, we couldn't find the movie you're looking for.</p>
+        <Link href="/">
+          <Button>Return to home page</Button>
+        </Link>
+      </div>
+    )
+  }
 
   return (
     <div className="pb-4">
