@@ -124,23 +124,32 @@ export function ReviewList({ movieId }: ReviewListProps) {
           <div className="space-y-6">
             <Tabs defaultValue="all" onValueChange={(value) => setFilter(value as FilterType)}>
               <div className="flex items-center justify-between">
-                <TabsList>
-                  <TabsTrigger value="all" className="flex items-center gap-2">
+                <TabsList className="flex flex-wrap h-auto">
+                  <TabsTrigger
+                    value="all"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                  >
                     All
                     <Badge variant="secondary" className="ml-1">
                       {reviewCounts.all}
                     </Badge>
                   </TabsTrigger>
-                  <TabsTrigger value="positive" className="flex items-center gap-2">
-                    <ThumbsUp className="h-4 w-4" />
-                    Positive
+                  <TabsTrigger
+                    value="positive"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                  >
+                    <ThumbsUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <span className="hidden xs:inline">Positive</span>
                     <Badge variant="secondary" className="ml-1">
                       {reviewCounts.positive}
                     </Badge>
                   </TabsTrigger>
-                  <TabsTrigger value="critical" className="flex items-center gap-2">
-                    <ThumbsDown className="h-4 w-4" />
-                    Critical
+                  <TabsTrigger
+                    value="critical"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                  >
+                    <ThumbsDown className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <span className="hidden xs:inline">Critical</span>
                     <Badge variant="secondary" className="ml-1">
                       {reviewCounts.critical}
                     </Badge>

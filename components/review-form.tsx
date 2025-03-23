@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { useToast } from "@/components/ui/use-toast"
 
 // Define the form schema with zod
 const reviewFormSchema = z.object({
@@ -28,6 +29,7 @@ interface ReviewFormProps {
 export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
   const [hoveredRating, setHoveredRating] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
   // Initialize the form
   const form = useForm<ReviewFormValues>({
@@ -45,6 +47,13 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
     // Simulate API call
     setTimeout(() => {
       updateReviews(values.name, values.rating, values.review)
+
+      // Show toast notification
+      toast({
+        title: "Review submitted!",
+        description: "Thank you for sharing your opinion.",
+        variant: "success",
+      })
 
       // Reset form
       form.reset()

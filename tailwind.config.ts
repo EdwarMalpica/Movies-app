@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -84,10 +87,30 @@ const config: Config = {
             height: "0",
           },
         },
+        "toast-hide": {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        "toast-slide-in-right": {
+          from: { transform: "translateX(calc(100% + 1rem))" },
+          to: { transform: "translateX(0)" },
+        },
+        "toast-slide-in-bottom": {
+          from: { transform: "translateY(calc(100% + 1rem))" },
+          to: { transform: "translateY(0)" },
+        },
+        "toast-swipe-out": {
+          from: { transform: "translateX(var(--radix-toast-swipe-end-x))" },
+          to: { transform: "translateX(calc(100% + 1rem))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "toast-hide": "toast-hide 100ms ease-in forwards",
+        "toast-slide-in-right": "toast-slide-in-right 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "toast-slide-in-bottom": "toast-slide-in-bottom 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "toast-swipe-out": "toast-swipe-out 100ms ease-out forwards",
       },
     },
   },
