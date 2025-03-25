@@ -94,3 +94,24 @@ body {
   }
 }
 
+.sonner-toast {
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sonner-toast[data-type="success"] {
+  border-left: 4px solid hsl(142.1, 76.2%, 36.3%);
+}
+
+.sonner-toast[data-type="error"] {
+  border-left: 4px solid hsl(var(--destructive));
+}
+
+.sonner-toast[data-type="info"] {
+  border-left: 4px solid hsl(221.2, 83.2%, 53.3%);
+}
+
+.sonner-toast[data-type="warning"] {
+  border-left: 4px solid hsl(38, 92%, 50%);
+}
+

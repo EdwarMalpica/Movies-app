@@ -36,7 +36,7 @@ export function MovieGrid({ searchQuery, onSuggestionClick, isSearching = false,
 
       // In a real app, fetch from an API with the search query
       setTimeout(() => {
-        let result = []
+        let result: any = []
 
         if (type === "popular") {
           result = getPopularMovies()

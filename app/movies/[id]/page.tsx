@@ -96,10 +96,16 @@ export default function MoviePage({ params }: MoviePageProps) {
         </div>
 
         <Tabs defaultValue="photos" className="w-full">
-          <TabsList className="mb-6">
-            <TabsTrigger value="photos">Photos</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
-          </TabsList>
+          <div className="flex justify-center md:justify-start mb-6">
+            <TabsList className="md:w-auto w-full grid grid-cols-2 md:grid-cols-none md:flex">
+              <TabsTrigger value="photos" className="text-center md:text-left">
+                Photos
+              </TabsTrigger>
+              <TabsTrigger value="reviews" className="text-center md:text-left">
+                Reviews
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="photos" className="space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

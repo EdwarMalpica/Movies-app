@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 
 // Define the form schema with zod
 const reviewFormSchema = z.object({
@@ -29,7 +29,6 @@ interface ReviewFormProps {
 export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
   const [hoveredRating, setHoveredRating] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
 
   // Initialize the form
   const form = useForm<ReviewFormValues>({
@@ -48,11 +47,10 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
     setTimeout(() => {
       updateReviews(values.name, values.rating, values.review)
 
-      // Show toast notification
-      toast({
-        title: "Review submitted!",
+      // Show Sonner toast notification
+      toast.success("Review submitted!", {
         description: "Thank you for sharing your opinion.",
-        variant: "success",
+        duration: 4000,
       })
 
       // Reset form
@@ -72,7 +70,7 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Rating</FormLabel>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 justify-center md:justify-start">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
@@ -125,8 +123,8 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
               )}
             />
           </CardContent>
-          <CardFooter>
-            <Button type="submit" disabled={isSubmitting}>
+          <CardFooter className="flex justify-center md:justify-start">
+            <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto">
               {isSubmitting ? "Submitting..." : "Submit Review"}
             </Button>
           </CardFooter>

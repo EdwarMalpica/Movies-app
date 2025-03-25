@@ -96,11 +96,11 @@ export function ReviewList({ movieId }: ReviewListProps) {
         ) : (
           <div className="space-y-6">
             <Tabs defaultValue="all" onValueChange={(value) => setFilter(value as FilterType)}>
-              <div className="flex items-center justify-between">
-                <TabsList className="flex flex-wrap h-auto">
+              <div className="flex justify-center md:justify-start">
+                <TabsList className="w-full md:w-auto grid grid-cols-3 md:grid-cols-none md:flex">
                   <TabsTrigger
                     value="all"
-                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2 justify-center md:justify-start"
                   >
                     All
                     <Badge variant="secondary" className="ml-1">
@@ -109,7 +109,7 @@ export function ReviewList({ movieId }: ReviewListProps) {
                   </TabsTrigger>
                   <TabsTrigger
                     value="positive"
-                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2 justify-center md:justify-start"
                   >
                     <ThumbsUp className="h-3 w-3 sm:h-4 sm:w-4" />
                     <span className="hidden xs:inline">Positive</span>
@@ -119,7 +119,7 @@ export function ReviewList({ movieId }: ReviewListProps) {
                   </TabsTrigger>
                   <TabsTrigger
                     value="critical"
-                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2"
+                    className="flex items-center gap-2 px-2 py-1.5 text-xs sm:text-sm sm:px-3 sm:py-2 justify-center md:justify-start"
                   >
                     <ThumbsDown className="h-3 w-3 sm:h-4 sm:w-4" />
                     <span className="hidden xs:inline">Critical</span>
