@@ -1,4 +1,3 @@
-// Mock data for movies
 export const mockMovies = [
   {
     id: 1,
@@ -230,7 +229,6 @@ export const mockMovies = [
   },
 ]
 
-// Mock data for reviews
 export const mockReviews = [
   {
     id: 1,
@@ -294,20 +292,16 @@ export const mockReviews = [
   },
 ]
 
-// Function to get a movie by ID
-export function getMovieById(id: number | string) {
+export async function getMovieById(id: number | string) {
   const numericId = typeof id === "string" ? Number.parseInt(id, 10) : id
+  await new Promise((res) => setTimeout(res, 0))
   return mockMovies.find((movie) => movie.id === numericId) || null
 }
 
-// Function to get reviews by movie ID
 export function getReviewsByMovieId(movieId: number | string) {
-  // In a real app, you would filter reviews by movie ID
-  // Here we simply return all reviews for any movie
   return mockReviews
 }
 
-// Function to search movies
 export function searchMovies(query: string) {
   if (!query) return mockMovies
 
@@ -322,16 +316,11 @@ export function searchMovies(query: string) {
   )
 }
 
-// Function to get popular movies
 export function getPopularMovies(limit = 6) {
-  // In a real app, this would be sorted by popularity
-  // Here we simply return the first few movies
   return mockMovies.slice(0, limit)
 }
 
-// Function to get top rated movies
 export function getTopRatedMovies(limit = 6) {
-  // Sort by rating (highest to lowest) and return the first 'limit' movies
   return [...mockMovies].sort((a, b) => b.rating - a.rating).slice(0, limit)
 }
 

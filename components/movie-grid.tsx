@@ -20,21 +20,17 @@ export function MovieGrid({ searchQuery, onSuggestionClick, isSearching = false,
   const [searchCache, setSearchCache] = useState<Record<string, any[]>>({})
 
   useEffect(() => {
-    // Skip fetching if we're still typing
     if (isSearching) return
 
-    // Simulate API fetch
     const fetchMovies = async () => {
       setLoading(true)
 
-      // Check if we have cached results for this query
       if (type === "search" && searchQuery && searchCache[searchQuery]) {
         setMovies(searchCache[searchQuery])
         setLoading(false)
         return
       }
 
-      // In a real app, fetch from an API with the search query
       setTimeout(() => {
         let result: any = []
 
@@ -45,7 +41,6 @@ export function MovieGrid({ searchQuery, onSuggestionClick, isSearching = false,
         } else if (searchQuery) {
           result = searchMovies(searchQuery)
 
-          // Cache the results
           setSearchCache((prev) => ({
             ...prev,
             [searchQuery]: result,
@@ -56,7 +51,7 @@ export function MovieGrid({ searchQuery, onSuggestionClick, isSearching = false,
 
         setMovies(result)
         setLoading(false)
-      }, 500) // Reduced loading time for better UX
+      }, 500) 
     }
 
     fetchMovies()

@@ -14,7 +14,6 @@ export function SearchForm({ value = "", onQueryChange }: SearchFormProps) {
   const [localQuery, setLocalQuery] = useState(value)
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Update local state when value prop changes (for suggestion clicks)
   useEffect(() => {
     setLocalQuery(value)
   }, [value])
@@ -29,23 +28,19 @@ export function SearchForm({ value = "", onQueryChange }: SearchFormProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
 
-    // Always update local state immediately for responsive typing
     setLocalQuery(newValue)
 
-    // Clear any existing timer
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current)
     }
 
-    // Set a new timer to update parent state after user stops typing
     debounceTimerRef.current = setTimeout(() => {
       if (onQueryChange) {
         onQueryChange(newValue)
       }
-    }, 500) // Increased debounce time to 500ms for better performance
+    }, 500) 
   }
 
-  // Clean up timer on unmount
   useEffect(() => {
     return () => {
       if (debounceTimerRef.current) {
@@ -65,12 +60,10 @@ export function SearchForm({ value = "", onQueryChange }: SearchFormProps) {
           value={localQuery}
           onChange={handleChange}
           onKeyDown={(e) => {
-            // Submit search on Enter key
             if (e.key === "Enter") {
               if (onQueryChange) {
                 onQueryChange(localQuery)
               }
-              // Clear any pending debounce
               if (debounceTimerRef.current) {
                 clearTimeout(debounceTimerRef.current)
                 debounceTimerRef.current = null

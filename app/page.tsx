@@ -12,7 +12,6 @@ export default function Home() {
     setIsSearching(true)
     setSearchQuery(query)
 
-    // Reset searching state after a delay to prevent UI flicker
     setTimeout(() => {
       setIsSearching(false)
     }, 100)

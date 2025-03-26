@@ -21,15 +21,11 @@ export function ReviewList({ movieId }: ReviewListProps) {
   const [filter, setFilter] = useState<FilterType>("all")
 
   useEffect(() => {
-    // Simulate API fetch
     const fetchReviews = async () => {
       setLoading(true)
-      // In a real app, fetch from an API based on movieId
       setTimeout(() => {
-        // Get reviews for this movie
         const movieReviews = getReviewsByMovieId(movieId)
 
-        // Sort reviews by date (newest first)
         const sortedReviews = [...movieReviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
         setReviews(sortedReviews)
@@ -42,13 +38,12 @@ export function ReviewList({ movieId }: ReviewListProps) {
 
   const handleUpdateReviews = (name: string, rating: number, review: string) => {
     const newReview = {
-      id: Date.now(), // Unique ID
+      id: Date.now(), 
       name: name,
       rating: rating,
       content: review,
       date: new Date().toISOString(),
     }
-    // Add new review at the beginning (newest first)
     setReviews((prevReviews) => [newReview, ...prevReviews])
   }
 

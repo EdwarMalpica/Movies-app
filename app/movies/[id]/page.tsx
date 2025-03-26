@@ -11,13 +11,10 @@ interface MoviePageProps {
   params: { id: string }
 }
 
-export default function MoviePage({ params }: MoviePageProps) {
+export default async function MoviePage({ params }: MoviePageProps) {
   const movieId = params.id
+  const movie = await getMovieById(movieId)
 
-  // Get movie data
-  const movie = getMovieById(movieId)
-
-  // If movie not found, show a message
   if (!movie) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">

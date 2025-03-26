@@ -12,7 +12,6 @@ import * as z from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { toast } from "sonner"
 
-// Define the form schema with zod
 const reviewFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   review: z.string().min(10, { message: "Review must be at least 10 characters" }),
@@ -30,7 +29,6 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
   const [hoveredRating, setHoveredRating] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Initialize the form
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
@@ -43,17 +41,14 @@ export function ReviewForm({ movieId, updateReviews }: ReviewFormProps) {
   const onSubmit = async (values: ReviewFormValues) => {
     setIsSubmitting(true)
 
-    // Simulate API call
     setTimeout(() => {
       updateReviews(values.name, values.rating, values.review)
 
-      // Show Sonner toast notification
       toast.success("Review submitted!", {
         description: "Thank you for sharing your opinion.",
         duration: 4000,
       })
 
-      // Reset form
       form.reset()
       setIsSubmitting(false)
     }, 1000)
